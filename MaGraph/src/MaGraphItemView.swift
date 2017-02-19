@@ -13,9 +13,9 @@ public enum Orientation: Int {
     case Horizontal = 21
 }
 
-public struct MaYItem {
+public struct MaSubItem {
     var maximum: CGFloat
-    var item: MaItem
+    var value: CGFloat
     var animationDuration: CGFloat = 2
     var animationDelay: CGFloat = 0
 }
@@ -29,109 +29,102 @@ public struct MaYItem {
     private var orientation: Orientation = .Vertical
     private var barLayer: CAShapeLayer!
     
-    public var item: MaYItem? {
-        didSet {
-            guard let aItem = item else { return }
-            let weightedHeight = bounds.height / 100.0
-            let mok = aItem.item.value / aItem.maximum * 100
-            positionY = weightedHeight * mok
-        }
-    }
-    
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        initialize()
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        initialize()
     }
     
-    private func initialize() {
-        let height = bounds.height
-        let width = bounds.width
-        let rect = CGRectMake(0, height - positionY, width, positionY)
-        
-        let path = UIBezierPath(rect: rect)
-        
-//        let y = height - positionY
-//        path.moveToPoint(CGPoint(x: 0, y: height))
-//        path.addLineToPoint(CGPoint(x: width, y: height))
-//        path.addLineToPoint(CGPoint(x: width, y: y))
-//        path.addLineToPoint(CGPoint(x: 0, y: y))
-//        path.closePath()
-        
-            
-        
-        bounds.size.height = 0
-        
-        barLayer = CAShapeLayer()
-        barLayer.fillColor = graphColor == nil ? defaultGraphColor.CGColor : graphColor!.CGColor
-        barLayer.strokeColor = graphColor == nil ? defaultGraphColor.CGColor : graphColor!.CGColor
-        barLayer.lineWidth = width
-        barLayer.path = path.CGPath
-        barLayer.strokeEnd = 0
-        barLayer.bounds = CGRectMake(0, height - positionY, width, 0)
-        
-//        layer.addSublayer(barLayer)
+    public var item: MaSubItem?
+    
+    private var currentPositionY: CGFloat {
+        get {
+            if frame.height < positionY { return frame.height }
+            else { return positionY }
+        }
     }
     
-//    public override func drawRect(rect: CGRect) {
-//        super.drawRect(rect)
+    private func calculatepositionY() {
+        guard let aItem = item else { return }
+        let weightedHeight = frame.height / 100.0
+        let percentage = aItem.value / aItem.maximum * 100
+        
+        positionY = percentage * weightedHeight
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        backgroundColor = UIColor.clearColor()
+        calculatepositionY()
+    }
+    
+//    func show() {
+//        print("show")
+//        let myLayer = CALayer()
+//        myLayer.frame = self.bounds
+//        myLayer.backgroundColor = UIColor.clearColor().CGColor
 //        
-//        let aPositionY = positionY
+//        let height = bounds.height
+//        let width = bounds.width
+//        let drawRect = CGRectMake(0, height - positionY, width, positionY)
 //        
-//        let rect = CGRectMake(0, bounds.height - aPositionY, bounds.width, aPositionY)
-//        let context = UIGraphicsGetCurrentContext()
+//        let initialRect = CGRectMake(0, height, width, 0)
+//        let finalRect = CGRectMake(0, 0, width, height)
+//        
+//        let subLayer = CALayer()
+//        subLayer.frame = initialRect
+//        subLayer.backgroundColor = UIColor.clearColor().CGColor
+//        
+//        let mask = CAShapeLayer()
+//        mask.frame = bounds
+//        mask.path = UIBezierPath(rect: drawRect).CGPath
 //        var color = UIColor.blueColor()
 //        if let aColor = graphColor { color = aColor }
+//        mask.fillColor = color.CGColor
+//        mask.strokeColor = color.CGColor
 //        
-//        CGContextSetRGBFillColor(context, color.CIColor.red, color.CIColor.green, color.CIColor.blue, color.CIColor.alpha)
-//        CGContextFillRect(context, rect)
+//        
+//        myLayer.mask = mask
+//        
+//        layer.addSublayer(myLayer)
+//        
+//        let animation = CABasicAnimation(keyPath: "bounds")
+//        animation.toValue = NSValue(CGRect: finalRect)
+//        
+//        let anim = CAAnimationGroup()
+//        anim.animations = [animation]
+//        anim.removedOnCompletion = false
+//        
+//        guard let aItem = item else {return}
+//        
+//        anim.duration = NSTimeInterval(aItem.animationDuration)
+//        anim.fillMode = kCAFillModeForwards
+//        subLayer.addAnimation(anim, forKey: nil)
+//        myLayer.addSublayer(subLayer)
 //    }
     
-    public func show() {
-        let height = bounds.height
-        let width = bounds.width
-        let rect = CGRectMake(0, height - positionY, width, positionY)
+    public override func drawRect(rect: CGRect) {
+        super.drawRect(rect)
         
-//        let path = UIBezierPath(rect: rect)
+        let height = rect.height
+        let width = rect.width
+        let drawRect = CGRectMake(0, height - currentPositionY, width, currentPositionY)
         
-//        let maskLayer = CAShapeLayer()
-//        maskLayer.fillColor = graphColor == nil ? defaultGraphColor.CGColor : graphColor!.CGColor
-//        maskLayer.lineWidth = width
-//        maskLayer.path = path.CGPath
-//        barLayer.bounds = CGRectMake(0, height - positionY, width, 0)
+        let context = UIGraphicsGetCurrentContext()
+        var color = UIColor.blueColor()
+        if let aColor = graphColor { color = aColor }
         
-        if let aItem = item where aItem.animationDuration > 0 {
-            CATransaction.setDisableActions(true)
-            let pathAnimation = CABasicAnimation(keyPath: "bounds.size.height")
-            pathAnimation.duration = CFTimeInterval(aItem.animationDuration)
-            barLayer.bounds.size.height = positionY
-            pathAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-            pathAnimation.fromValue = NSNumber(float: 0)
-            pathAnimation.toValue = NSNumber(float: Float(positionY))
-            pathAnimation.autoreverses = false
-            pathAnimation.removedOnCompletion = false
-            pathAnimation.fillMode = kCAFillModeForwards
-            pathAnimation.beginTime = CACurrentMediaTime() + CFTimeInterval(aItem.animationDelay)
-//            barLayer.strokeEnd = 1.0
-//            barLayer.bounds = rect
-//            barLayer.addAnimation(pathAnimation, forKey: nil)
-//            maskLayer.bounds = rect
-            barLayer.addAnimation(pathAnimation, forKey: "bounds")
-            
-            
-        } else {
-            barLayer.strokeEnd = 1.0
-        }
-    
+        let colorRef = color.CGColor
+        let component = CGColorGetComponents(colorRef)
+        let red = component[0]
+        let green = component[1]
+        let blue = component[2]
+        let alpha: CGFloat = 1
         
+        CGContextSetRGBFillColor(context, red, green, blue, alpha)
+        CGContextFillRect(context, drawRect)
     }
-    
-//    public func show() {
-////        layer.addSublayer(generateLayer())
-//    }
 }

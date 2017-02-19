@@ -18,28 +18,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zWa-dK-UdL" customClass="MaGraphItemView" customModule="MaGraph" customModuleProvider="target">
-                                <rect key="frame" x="20" y="28" width="40" height="572"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zWa-dK-UdL" customClass="MaGraphView" customModule="MaGraph" customModuleProvider="target">
+                                <rect key="frame" x="25" y="28" width="550" height="572"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="vkH-2f-P4F"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="positionY">
-                                        <real key="value" value="80.099999999999994"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="zWa-dK-UdL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="0BG-k3-bgN"/>
+                            <constraint firstItem="zWa-dK-UdL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="5" id="0BG-k3-bgN"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zWa-dK-UdL" secondAttribute="trailing" constant="5" id="268-0z-MrU"/>
                             <constraint firstItem="zWa-dK-UdL" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="N1a-Yw-AKG"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zWa-dK-UdL" secondAttribute="bottom" id="peo-x8-muz"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="barGraph" destination="zWa-dK-UdL" id="dca-wP-bTZ"/>
+                        <outlet property="maGraphView" destination="zWa-dK-UdL" id="oHq-DB-qo9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
