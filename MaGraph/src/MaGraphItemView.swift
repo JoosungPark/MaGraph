@@ -61,70 +61,72 @@ public struct MaSubItem {
         calculatepositionY()
     }
     
-//    func show() {
-//        print("show")
-//        let myLayer = CALayer()
-//        myLayer.frame = self.bounds
-//        myLayer.backgroundColor = UIColor.clearColor().CGColor
-//        
-//        let height = bounds.height
-//        let width = bounds.width
-//        let drawRect = CGRectMake(0, height - positionY, width, positionY)
-//        
-//        let initialRect = CGRectMake(0, height, width, 0)
-//        let finalRect = CGRectMake(0, 0, width, height)
-//        
-//        let subLayer = CALayer()
-//        subLayer.frame = initialRect
-//        subLayer.backgroundColor = UIColor.clearColor().CGColor
-//        
-//        let mask = CAShapeLayer()
-//        mask.frame = bounds
-//        mask.path = UIBezierPath(rect: drawRect).CGPath
-//        var color = UIColor.blueColor()
-//        if let aColor = graphColor { color = aColor }
-//        mask.fillColor = color.CGColor
-//        mask.strokeColor = color.CGColor
-//        
-//        
-//        myLayer.mask = mask
-//        
-//        layer.addSublayer(myLayer)
-//        
-//        let animation = CABasicAnimation(keyPath: "bounds")
-//        animation.toValue = NSValue(CGRect: finalRect)
-//        
-//        let anim = CAAnimationGroup()
-//        anim.animations = [animation]
-//        anim.removedOnCompletion = false
-//        
-//        guard let aItem = item else {return}
-//        
-//        anim.duration = NSTimeInterval(aItem.animationDuration)
-//        anim.fillMode = kCAFillModeForwards
-//        subLayer.addAnimation(anim, forKey: nil)
-//        myLayer.addSublayer(subLayer)
-//    }
-    
-    public override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    func show() {
+        print("show")
+        let myLayer = CALayer()
+        myLayer.frame = self.bounds
+        myLayer.backgroundColor = UIColor.clearColor().CGColor
         
-        let height = rect.height
-        let width = rect.width
-        let drawRect = CGRectMake(0, height - currentPositionY, width, currentPositionY)
+        let height = bounds.height
+        let width = bounds.width
+        let drawRect = CGRectMake(0, height - positionY, width, positionY)
         
-        let context = UIGraphicsGetCurrentContext()
+        let initialRect = CGRectMake(0, height, width, 0)
+        let finalRect = CGRectMake(0, 0, width, height)
+        
+        let subLayer = CALayer()
+        subLayer.frame = initialRect
+        subLayer.backgroundColor = UIColor.clearColor().CGColor
+        
+        let mask = CAShapeLayer()
+        mask.frame = bounds
+        mask.path = UIBezierPath(rect: drawRect).CGPath
         var color = UIColor.blueColor()
         if let aColor = graphColor { color = aColor }
+        mask.fillColor = color.CGColor
+        mask.strokeColor = color.CGColor
         
-        let colorRef = color.CGColor
-        let component = CGColorGetComponents(colorRef)
-        let red = component[0]
-        let green = component[1]
-        let blue = component[2]
-        let alpha: CGFloat = 1
         
-        CGContextSetRGBFillColor(context, red, green, blue, alpha)
-        CGContextFillRect(context, drawRect)
+        myLayer.mask = mask
+        
+        layer.addSublayer(myLayer)
+        
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.toValue = NSValue(CGRect: finalRect)
+        
+        let anim = CAAnimationGroup()
+        anim.animations = [animation]
+        anim.removedOnCompletion = false
+        
+        guard let aItem = item else {return}
+        
+        anim.duration = NSTimeInterval(aItem.animationDuration)
+        anim.fillMode = kCAFillModeForwards
+        subLayer.addAnimation(anim, forKey: "AnimateFrame")
+//        subLayer.position
+        myLayer.addSublayer(subLayer)
+        
     }
+    
+//    public override func drawRect(rect: CGRect) {
+//        super.drawRect(rect)
+//        
+//        let height = rect.height
+//        let width = rect.width
+//        let drawRect = CGRectMake(0, height - currentPositionY, width, currentPositionY)
+//        
+//        let context = UIGraphicsGetCurrentContext()
+//        var color = UIColor.blueColor()
+//        if let aColor = graphColor { color = aColor }
+//        
+//        let colorRef = color.CGColor
+//        let component = CGColorGetComponents(colorRef)
+//        let red = component[0]
+//        let green = component[1]
+//        let blue = component[2]
+//        let alpha: CGFloat = 1
+//        
+//        CGContextSetRGBFillColor(context, red, green, blue, alpha)
+//        CGContextFillRect(context, drawRect)
+//    }
 }

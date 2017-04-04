@@ -142,16 +142,16 @@ public class MaGraphView: UIView {
     }
     
     public func show() {
-//        window?.becomeKeyWindow()
-//        window?.makeKeyAndVisible()
-//        for (_, graph) in graphItemViews {
-//            graph.show()
-//        }
-//        
-//        guard let aItems = items else { return }
-//        
-//        UIView.animateWithDuration(NSTimeInterval(5), delay: NSTimeInterval(aItems.animationDelay), options: .CurveLinear, animations: {
-//            self.heightRate = 1
-//            }, completion: nil)
+        window?.becomeKeyWindow()
+        window?.makeKeyAndVisible()
+        for (_, graph) in graphItemViews {
+            graph.show()
+        }
+        
+        guard let aItems = items else { return }
+        
+        UIView.animateWithDuration(NSTimeInterval(5), delay: NSTimeInterval(aItems.animationDelay), options: .CurveLinear, animations: {
+            self.heightRate = 1
+            }, completion: nil)
     }
 }
