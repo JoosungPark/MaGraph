@@ -2,7 +2,7 @@
 MaGraph is a graph library.
 
 Available graph are :
-+ Circular Bar 
++ Circular Bar<br> 
 ![Alt text](/MaGraph/images/circularbar_example.png)
 
 Supports features :
@@ -12,5 +12,5 @@ Supports features :
 + Duration : animation duration.
 + Radius : Radius. default is radius of MaCircularBar Size(max of (width or height / 2).
 
-You can set these features alike below.
+You can set these features alike below.<br>
  ![Alt text](/MaGraph/images/circularbar_attribute_inspector.png)
