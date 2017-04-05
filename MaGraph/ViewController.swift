@@ -9,28 +9,14 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-//    @IBOutlet weak var maGraphView: MaGraphView! {
-//        didSet {
-//            let values: [CGFloat] = [150, 200, 50, 35, 98, 533, 75 ]
-//            let xNames = ["ss", "dd"]
-//            let yValue = MaItem(value: 77, name: "dd")
-//            maGraphView.items = MaGraphItems(xValues: values, xNames: xNames, yValues:yValue, animationDuration: 2, animationDelay: 1)
-//        }
-//    }
     @IBOutlet weak var circularBar: MaCircularBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIView.setAnimationsEnabled(true)
-        
     }
     
     override func viewDidAppear(animated: Bool) {
-//        maGraphView.layoutIfNeeded()
-        
-//        maGraphView.show()
-        circularBar.setCircularBar(0.6)
+        circularBar.start(0.7)
     }
 }
 
